@@ -15,9 +15,9 @@ catkin_make -DCMAKE_BUILD_TYPE=Release
 To set the Novatel offset, you can call the respective ROS services:
 
 - **Offset to Center of Gravity (CG):**
-  '''bash
+  ```bash
   rosservice call /novatel/oem7/receivers/main/Oem7Cmd "SETINSTRANSLATION USER 1.5 0.0 0.0 0.1 0.0 0.0 IMUBODY"
-  '''
+  ```
   
 - **Offset to Rear Axle (INS Mount):**
   ```bash
