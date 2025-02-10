@@ -12,8 +12,8 @@ chmod 777 install_dependency.sh
 
 
 # update lib's submodules ... version dependency exist
-cd src/lib 
-git submodule update --recursive --init 
+# cd src/lib 
+# git submodule update --recursive --init 
 
 chmod 777 install_*
 ./install_acados.sh
