@@ -8,6 +8,7 @@ Please clone the project in your ${HOME}/git/ directory
 mkdir -p ~/git && cd ~/git
 git clone https://github.com/ailab-hanyang/AutoHYU-Control-Personality.git
 cd ~/git/AutoHyu-Control-Personality
+./install_dependency_n_solver.sh
 catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
