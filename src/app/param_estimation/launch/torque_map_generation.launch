@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="mode" default="morai" /> 
+  <!-- 'morai' or 'carmaker' or 'carla' or 'real'-->   
+
+
+  <param name="param_estimate_mode" value="$(arg mode)" />
+
+  <param name="param_estimation/vehicle/mass"                 value="2300" />
+  <param name="param_estimation/vehicle/wheel_radius"         value="0.36" />
+  <param name="param_estimation/vehicle/vehicle_front_to_cg"  value="1.49" />
+  <param name="param_estimation/vehicle/vehicle_rear_to_cg"   value="1.51" />
+  <param name="param_estimation/vehicle/front_area"           value="2.877" />
+  <param name="param_estimation/vehicle/air_drag_coeff"       value="0.3" />
+  <param name="param_estimation/vehicle/rolling_resistance"   value="0.015" />
+  <param name="param_estimation/air_density"                  value="1.205" />
+  <param name="param_estimation/gravity_coeff"                value="9.806" />
+  <node pkg="param_estimation" type="torque_map_generation.py" name="torque_map_generation" output="screen" />
+  
+</launch>

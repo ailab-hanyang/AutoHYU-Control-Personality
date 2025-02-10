@@ -1,0 +1,2 @@
+uint16 scene_type
+PersonalityScenePoint[] scene_points

@@ -1,0 +1,29 @@
+costfunction_type: 'NONLINEAR_LS' # 'NONLINEAR_LS' or 'EXTERNAL'
+solver_build: True
+solver_generate_C_code: True
+
+## Static cost function parameters 
+s_lon           : 1
+s_lat           : 1
+s_yaw           : 1
+s_vel           : 1
+s_jerk          : 1
+s_steering_rate : 1
+
+q_lon           : 0.0 # 0.0
+q_lat           : 20.8 # 2.8
+q_yaw           : 5.0
+q_vel           : 0.5 # 0.05  # 0.5
+r_jerk          : 0.001
+r_steering_rate : 10.0
+
+L1_pen          : 106.9
+L2_pen          : 9.9
+
+
+# --- constraints params
+lookuptable_gg_limits: 'ioniq5/ggv.csv'
+combined_acc_limits: 2
+  # 0: no combined limits (separate limits)
+  # 1: Diamond shaped combined lat lon acceleration limits
+  # 2: Circle shaped combined lat lon acceleration limits

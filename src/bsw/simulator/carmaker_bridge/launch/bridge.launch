@@ -1,0 +1,34 @@
+<!-- -->
+<launch>  
+  <!-- Received from higher launch -->
+  <arg name="location" default="kcity"/>
+  <arg name="proj_mode" default="local_cartesian" /> 
+  <arg name="roi" default="50" /> 
+
+  <!-- Default : kcity -->
+  <arg name="ref_lat" default="37.23855064" />
+  <arg name="ref_lon" default="126.77253029" />  
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  
+  <!-- object driver -->
+  <node pkg="carmaker" type="object_driver_carmaker" name="object_driver" output="log" respawn="true">
+    <!-- location name -->
+    <param name="location" value="$(arg location)"/>
+    <param name="roi" value="$(arg roi)"/>
+  </node>
+  
+  <!-- vehicle control -->
+  <node pkg="carmaker" type="vehicle_control_carmaker" name="vehicle_control" output="screen" respawn="true"/>
+  
+  <!-- vehicle driver -->
+  <node pkg="carmaker" type="vehicle_driver_carmaker" name="vehicle_driver" output="log" respawn="true">
+    <!-- location name -->
+    <param name="location" value="$(arg location)"/>
+    <!-- projection name -->
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+    <!-- reference point -->
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+  </node>
+</launch>  

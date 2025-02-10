@@ -1,0 +1,11 @@
+<!-- -->
+<launch> 
+  <arg name="roi" default="50" />
+  <arg name="role_name" default="hero" />
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  <node pkg="carla" type="object_driver_carla" name="object_driver" output="screen" respawn="true">
+    <param name="role_name" value="$(arg role_name)"/>
+    <param name="roi" value="$(arg roi)"/>
+  </node>
+</launch>

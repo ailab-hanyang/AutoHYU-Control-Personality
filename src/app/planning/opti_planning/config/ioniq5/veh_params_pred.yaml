@@ -1,0 +1,25 @@
+## autohyu vehicle params 
+l: 3.0  # wheelbase [m]
+lf: 1.49   # distance from spring mass center of gravity to front axle [m]  
+lr: 1.51   # distance from spring mass center of gravity to rear axle [m]  
+m: 2300     # vehicle mass [kg]  MASS
+Iz: 3637  # TBD moment of inertia for sprung mass in yaw [kg m^2]  IZZ
+h: 0.275    # TBD center of gravity above ground [m]  HS
+ro: 1.225          # air density 
+S: 2.8             # TBD frontal area
+Cd: 0.35        # TBD drag coeff
+veh_length: 4.635 # outer vehicle dimensions
+veh_width: 1.890 # outer vehicle dimensions
+veh_height: 1.605    # outer vehicle dimensions
+
+# constraints
+jerk_min: -800    # TBD [m/s³]  need to be validated
+jerk_max: 600    # TBD [m/s³]
+lat_acc_min: -5.886  # [m/s²] in High-Dynamic Mode                             
+lat_acc_max: 5.886   # [m/s²] in High-Dynamic Mode                                
+acc_min: -6.5 
+acc_max: 5.5                                                 
+delta_f_min: -0.610865     # steering angle [rad]
+delta_f_max: 0.610865      # steering angle [rad]
+delta_f_dot_min: -0.58 # TBD steering angular velocity [rad/s]
+delta_f_dot_max: 0.58   # TBD steering angular velocity [rad/s]

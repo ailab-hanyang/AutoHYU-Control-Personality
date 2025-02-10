@@ -1,0 +1,5 @@
+<!-- -->
+<launch>    
+    <rosparam file="config/rosparam_system.yaml" command="load"/>
+    <node pkg="delayed_state" type="delayed_state" name="delayed_state" output="screen" respawn="true"/>
+</launch>

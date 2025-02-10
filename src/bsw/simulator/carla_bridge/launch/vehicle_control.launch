@@ -1,0 +1,8 @@
+<!-- -->
+<launch>
+    <arg name="role_name" default="hero" />
+    <rosparam file="config/rosparam_system.yaml" command="load"/>   
+    <node pkg="carla" type="vehicle_control_carla" name="vehicle_control" output="screen" respawn="true">
+        <param name="role_name" value="$(arg role_name)"/>  
+    </node>
+</launch>

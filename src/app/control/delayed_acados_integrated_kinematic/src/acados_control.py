@@ -1,0 +1,407 @@
+#!/usr/bin/env python3
+
+"""
+acados_control node
+"""
+# ROS Library
+import rospy
+from std_msgs.msg import Float32, Float32MultiArray
+from autohyu_msgs.msg import VehicleState, Trajectory, TrajectoryPoint, ControlInfo
+from visualization_msgs.msg import MarkerArray, Marker
+from geometry_msgs.msg import Point
+
+# Python Library
+import numpy as np
+import yaml
+from scipy import *
+from scipy.optimize import minimize
+import time
+from casadi import *
+
+# Utils for MPC
+from utils.controller_utils import *
+from utils.trajectory_process import *
+
+# MPC Models
+from MPC.NMPC_class   import Nonlinear_Model_Predictive_Controller as Model_Predictive_Controller
+
+
+
+class AcadosControl(object):
+    """
+    Control With Acados
+    """
+
+    def __init__(self):
+        # init ROS node
+        rospy.init_node('acados_control', anonymous=True)
+        self.period = rospy.get_param('/task_period/period_lateral_control')
+
+        # Subscriber
+        self.s_vehicle_state = rospy.Subscriber(
+            "app/loc/vehicle_state", VehicleState, self.callback_vehicle_state)
+        self.is_vehicle_state = False
+        
+        self.s_trajectory = rospy.Subscriber(
+            "app/pla/trajectory", Trajectory, self.callback_trajectory)
+        self.is_trajectory = False
+
+        # Publisher
+        self.p_command_steer = rospy.Publisher(
+            "app/con/command_steer", Float32, queue_size=10)
+        self.p_command_torque = rospy.Publisher(
+            "app/con/command_torque", Float32, queue_size=10)
+        self.p_control_path = rospy.Publisher(
+            "hmi/con/control_path", MarkerArray, queue_size=10)
+        self.p_resample_path = rospy.Publisher(
+            "hmi/con/resample_path", MarkerArray, queue_size=10)
+        self.p_control_info = rospy.Publisher(
+            "hmi/con/control_info", ControlInfo, queue_size=10)
+        
+        # Add new publishers for sampled_trajectory and target_pred
+        self.p_sampled_trajectory = rospy.Publisher(
+            "hmi/con/sampled_trajectory", Float32MultiArray, queue_size=10)
+        self.p_target_pred = rospy.Publisher(
+            "hmi/con/target_pred", Float32MultiArray, queue_size=10)
+        # Input Variables
+        self.i_vehicle_state = VehicleState()
+        self.i_trajectory = Trajectory()
+
+        # Output Variables
+        self.o_command_steer_deg = Float32()
+        self.o_command_trq_nm = Float32()
+        self.o_control_path = MarkerArray()
+        self.o_resample_path = MarkerArray()
+        self.o_control_info = ControlInfo()
+                
+        # Parameters
+        self.config_path  = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/config/'
+        with open(self.config_path + "controller_main_params.yaml", 'r') as file:
+            self.controller_params = yaml.load(file, Loader=yaml.FullLoader)
+        self.N_MPC = int(self.controller_params['Tp'] / self.controller_params['Ts_MPC']) # MPC step time
+        self.Ts_MPC = self.controller_params['Ts_MPC'] # MPC dt
+        self.update_params()
+        
+        # Predictions : Every controller's output must satisfy ... [x,y,yaw,vx,delta,trq]
+        self.target_pred = np.empty((self.N_MPC, 8)) 
+        self.sampled_trajectory = np.empty((self.N_MPC+1, 5)) 
+        self.MPC = None
+        self.MPC_kinematic = None
+        self.MPC_dynamic = None
+
+        # Initialize markers
+        self.initialize_markers()
+
+        # model type
+        self.model_name = self.controller_params['MPC_model']
+        self.model_costtype = self.controller_params['MPC_model_costfunction_type']
+        self.switch_model_name = self.controller_params['MPC_switch_model']
+        self.switch_model_costtype = self.controller_params['switch_model_costfunction_type']
+        
+        self.is_model_kinematic = True
+        self.is_model_changed = False
+
+
+
+    def loop(self):
+        """
+        main loop
+        """  
+        rate = rospy.Rate(float(1. / self.period))        
+
+        while not rospy.is_shutdown():
+            total_time_start = time.time()
+            
+            # Wait for X0 and Xref
+            if not self.is_vehicle_state:
+                print(f"{time.time():.1f}", " waiting for vehicle state")
+                continue
+            if not self.is_trajectory:
+                print(f"{time.time():.1f}", " waiting for trajectory")
+                continue
+            
+            vehicle_state = self.i_vehicle_state
+            trajectory = self.i_trajectory
+            
+            ego_trajectory = transform_traj_to_ego(vehicle_state, trajectory)
+            cte, sampled_trajectory = get_ref_trajectory_dt(ego_trajectory, self.N_MPC+1, self.Ts_MPC) # [t, x, y, yaw, speed]
+            self.sampled_trajectory = sampled_trajectory
+            
+            
+            ### Initialize MPC
+            # if self.controller_params['model_switch'] == False:
+            #     if self.MPC is None:
+            #         self.MPC = Model_Predictive_Controller(self.model_name, self.model_costtype, self.config_path, self.controller_params, self.MPC_params, sampled_trajectory)
+                
+            #     self.update_params()
+            #     self.target_pred, target_input, states = self.MPC.calculate_optimal(sampled_trajectory, vehicle_state, self.MPC_params)
+            if self.MPC is None:
+                self.MPC = Model_Predictive_Controller(self.model_name, self.model_costtype, self.config_path, self.controller_params, self.MPC_params, sampled_trajectory)
+                
+                self.update_params()
+            
+            
+            
+            self.target_pred, target_input, states = self.MPC.calculate_optimal(sampled_trajectory, vehicle_state, self.MPC_params)
+                
+
+            # print("pred shape: ", np.shape(self.target_pred))
+            # print("ref shape: ", np.shape(sampled_trajectory))
+            
+            self.o_command_steer_deg.data = np.float32(target_input[0])
+            self.o_command_trq_nm.data = np.float32(target_input[1])
+            
+            self.update_resample_path(sampled_trajectory)
+            self.update_control_path(sampled_trajectory, self.target_pred, self.Ts_MPC)
+            total_time_end = time.time()
+            
+            total_time = 1000.0 * (total_time_end - total_time_start)
+
+            self.update_control_info(vehicle_state, sampled_trajectory, cte, total_time, states)
+            
+            # Publish 
+            self.publish()
+            rate.sleep()
+
+    def destroy(self):
+        """
+        Destroy all objects
+        """
+        self.p_command_steer.unregister()
+        self.p_control_path.unregister()
+        self.p_resample_path.unregister()
+        self.p_command_torque.unregister()
+        self.p_control_info.unregister()
+        self.p_sampled_trajectory.unregister()
+        self.p_target_pred.unregister()
+
+        self.s_vehicle_state.unregister()
+        self.s_trajectory.unregister()
+    
+    def callback_vehicle_state(self, data):
+        """
+        Callback function for /vehicle_state
+        """
+        self.i_vehicle_state = data
+        self.is_vehicle_state = True
+
+    def callback_trajectory(self, data):
+        """
+        Callback function for /trajectory
+        """
+        self.i_trajectory = data
+        self.is_trajectory = True
+    
+    def publish(self):
+        """
+        Publish Control Command and Errors 
+        """
+        self.p_command_steer.publish(self.o_command_steer_deg)
+        self.p_command_torque.publish(self.o_command_trq_nm)
+        self.p_control_path.publish(self.o_control_path)
+        self.p_resample_path.publish(self.o_resample_path)
+        self.p_control_info.publish(self.o_control_info)
+
+        # Publish sampled_trajectory and target_pred
+        self.publish_float32_multi_array(self.p_sampled_trajectory, self.sampled_trajectory)
+        self.publish_float32_multi_array(self.p_target_pred, self.target_pred)
+
+    def publish_float32_multi_array(self, publisher, array):
+        """
+        Publish numpy array as Float32MultiArray
+        """
+        array = np.float32(array)
+        msg = Float32MultiArray()
+        msg.data = array.flatten().tolist()
+        publisher.publish(msg)
+
+    def update_params(self):        
+        with open(self.config_path + self.controller_params['MPC_param_file'], 'r') as file:
+            self.MPC_params = yaml.load(file, Loader=yaml.CLoader)
+    
+    def initialize_markers(self):
+        ## Messages
+        # optimized control path (w/ speed)
+        self.speed_marker = Marker()
+        self.speed_marker.header.frame_id  = "ego_frame"
+        self.speed_marker.ns = "temporal"
+        self.speed_marker.id = 0
+        self.speed_marker.action = Marker().ADD
+        self.speed_marker.type = Marker().LINE_LIST
+        self.speed_marker.lifetime = rospy.Duration(0.1)
+        self.speed_marker.scale.x = 0.15
+        self.speed_marker.color.r = 1.0
+        self.speed_marker.color.g = 0.0
+        self.speed_marker.color.b = 0.58
+        self.speed_marker.color.a = 1.0
+
+        for i in range(self.N_MPC): 
+            pt1 = Point()
+            pt2 = Point()
+            self.speed_marker.points.append(pt1)
+            self.speed_marker.points.append(pt2)
+
+        self.path_marker = Marker()
+        self.speed_marker.header.frame_id  = "ego_frame"
+        self.path_marker.ns = "spartial"
+        self.path_marker.id = 1
+        self.path_marker.action = Marker().ADD
+        self.path_marker.type = Marker().LINE_STRIP
+        self.path_marker.lifetime = rospy.Duration(0.1)
+        self.path_marker.scale.x = 0.25
+        self.path_marker.color.r = 1.0
+        self.path_marker.color.g = 0.0
+        self.path_marker.color.b = 0.58
+        self.path_marker.color.a = 1.0
+
+        for i in range(self.N_MPC): 
+            pt = Point()
+            self.path_marker.points.append(pt)
+
+        # reference trajectory control uses (w/o speed)
+        self.resample_marker = MarkerArray()
+        for i in range((self.N_MPC+1)*2):
+            marker = Marker()
+            self.speed_marker.header.frame_id  = "ego_frame"
+            marker.action = Marker().ADD
+            marker.type = Marker().CYLINDER
+            marker.lifetime = rospy.Duration(0.1)
+            marker.scale.x = 0.15
+            marker.scale.y = 0.15
+            marker.color.a = 1.0
+            marker.pose.orientation.x = 0.0
+            marker.pose.orientation.y = 0.0
+            marker.pose.orientation.z = 0.0
+            marker.pose.orientation.w = 1.0
+            self.resample_marker.markers.append(marker)
+
+    def update_resample_path(self, sampled_trajectory):
+        sampled_x = sampled_trajectory[:, 1]
+        sampled_y = sampled_trajectory[:, 2]
+        sampled_yaw = sampled_trajectory[:, 3]
+        sampled_speed = sampled_trajectory[:, 4]
+
+        for j in range(len(sampled_x)):
+            visual_yaw = sampled_yaw[j] * 7
+
+            # self.resample_marker.markers[j].header.stamp = rospy.Time.now()
+            self.resample_marker.markers[j].id = j
+            self.resample_marker.markers[j].ns = '/yaw'
+            
+            self.resample_marker.markers[j].pose.position.x = sampled_x[j]
+            self.resample_marker.markers[j].pose.position.y = sampled_y[j]
+            self.resample_marker.markers[j].pose.position.z = visual_yaw * 0.5
+            
+            self.resample_marker.markers[j].scale.z = visual_yaw
+
+            self.resample_marker.markers[j].color.r = 0.0
+            self.resample_marker.markers[j].color.g = 0.0
+            self.resample_marker.markers[j].color.b = 1.0
+
+        for i in range(len(sampled_x)):
+            # self.resample_marker.markers[j].header.stamp = rospy.Time.now()
+            self.resample_marker.markers[j].id = len(sampled_x)+i
+            self.resample_marker.markers[j].ns = '/speed'
+            
+            self.resample_marker.markers[j].pose.position.x = sampled_x[i]
+            self.resample_marker.markers[j].pose.position.y = sampled_y[i]
+            self.resample_marker.markers[j].pose.position.z = sampled_speed[i] * 0.27778 * 0.5
+            
+            self.resample_marker.markers[j].scale.z = sampled_speed[i] * 0.27778
+
+            self.resample_marker.markers[j].color.r = 0.0
+            self.resample_marker.markers[j].color.g = 1.0
+            self.resample_marker.markers[j].color.b = 1.0
+            j = j + 1
+
+        self.o_resample_path = self.resample_marker
+
+    def update_control_path(self, X_ref, pred_X, dt):
+        predicted_trajectory = Trajectory()
+        
+        N = pred_X.shape[0]  # pred_X의 첫 번째 차원 크기
+             
+        for i in range(N):
+            point = TrajectoryPoint()
+            point.x = pred_X[i, 0]
+            point.y = pred_X[i, 1]
+            point.yaw = pred_X[i, 2]
+            point.speed = pred_X[i, 3] 
+            predicted_trajectory.point.append(point)
+
+        marker_array = MarkerArray()
+        
+        # self.speed_marker.header.frame_id = "CG"
+        self.speed_marker.header.frame_id = "ego_frame"
+        self.speed_marker.header.stamp = predicted_trajectory.header.stamp
+
+        idx = 0
+        for i in range(0, len(predicted_trajectory.point) * 2, 2):
+            self.speed_marker.points[i].x = predicted_trajectory.point[idx].x
+            self.speed_marker.points[i].y = predicted_trajectory.point[idx].y
+            self.speed_marker.points[i].z = 0
+
+            self.speed_marker.points[i + 1].x = predicted_trajectory.point[idx].x
+            self.speed_marker.points[i + 1].y = predicted_trajectory.point[idx].y
+            self.speed_marker.points[i + 1].z = predicted_trajectory.point[idx].speed * 0.27778 # kph2mps
+            idx += 1
+        marker_array.markers.append(self.speed_marker)
+
+        # self.path_marker.header.frame_id = "CG"
+        self.path_marker.header.frame_id = "ego_frame"
+        self.path_marker.header.stamp = predicted_trajectory.header.stamp
+
+        for i in range(len(predicted_trajectory.point)):
+            self.path_marker.points[i].x = predicted_trajectory.point[i].x
+            self.path_marker.points[i].y = predicted_trajectory.point[i].y
+            self.path_marker.points[i].z = 0.1
+        marker_array.markers.append(self.path_marker)
+
+        self.o_control_path = marker_array
+
+    def update_control_info(self, vehicle_state, sampled_trajectory, cte, total_time, MPC_stats):
+        self.o_control_info.current_speed = vehicle_state.vx * 3.6
+        self.o_control_info.target_speed = sampled_trajectory[0, 4] * 3.6
+        self.o_control_info.speed_error = (sampled_trajectory[0, 4] - vehicle_state.vx) * 3.6
+        self.o_control_info.yaw_error = sampled_trajectory[0, 3]
+        self.o_control_info.cross_track_error = cte
+        self.o_control_info.total_time = total_time
+        self.o_control_info.opt_cost = MPC_stats[0]
+        self.o_control_info.opt_time = MPC_stats[1]
+        self.o_control_info.sqp_iter = MPC_stats[2]
+        self.o_control_info.qp_iter = MPC_stats[3]
+        self.o_control_info.solve_time = MPC_stats[5]
+
+
+
+    def check_model_switch(self, vehicle_state):
+        before_model = self.is_model_kinematic
+
+        if (vehicle_state.vx > (25.0 / 3.6) and self.MPC_dynamic.stats[0] < 5.0):
+            self.is_model_kinematic = False
+        else:
+            self.is_model_kinematic = True
+
+        if before_model != self.is_model_kinematic:
+            self.is_model_changed = True
+        else:
+            self.is_model_changed = False
+
+
+# ==============================================================================
+# -- main() --------------------------------------------------------------------
+# ==============================================================================
+
+def main():
+    """
+    main function
+    """
+    acados_control = AcadosControl()
+    try:
+        acados_control.loop()
+    finally:
+        if acados_control is not None:
+            acados_control.destroy()
+
+if __name__ == '__main__':
+    main()

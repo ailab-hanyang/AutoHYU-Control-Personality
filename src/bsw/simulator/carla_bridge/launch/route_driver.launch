@@ -1,0 +1,9 @@
+<!-- -->
+<launch>
+  <arg name="role_name" default="hero" />
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  <node pkg="carla" type="route_driver_carla" name="route_driver" output="screen" respawn="true">
+    <param name="role_name" value="$(arg role_name)"/>    
+  </node>
+</launch>

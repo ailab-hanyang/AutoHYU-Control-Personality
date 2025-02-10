@@ -1,0 +1,5 @@
+<!-- -->
+<launch>
+    <rosparam file="config/rosparam_system.yaml" command="load"/>   
+    <node pkg="morai" type="vehicle_control_morai" name="vehicle_control" output="screen" respawn="true"/>
+</launch>

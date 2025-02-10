@@ -1,0 +1,8 @@
+<?xml version="1.0"?> 
+<launch>
+	<node pkg='personality_extraction' type='personality_adjustment_node.py' name='personality_adjustment' output='screen'>
+		<param name='personality_apply_target_controller' value='acados_scc_control'/>
+		<param name='apply_personality_pattern' value='True'/>
+	</node>
+
+</launch>

@@ -1,0 +1,16 @@
+<!-- -->
+<launch>
+  <arg name="location" default="kcity" /> 
+  <arg name="proj_mode" default="local_cartesian" /> 
+  <arg name="ref_lat" default="" />
+  <arg name="ref_lon" default="" />
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  <node pkg="morai" type="vehicle_driver_morai" name="vehicle_driver" output="log" respawn="false">
+    <param name="location" value="$(arg location)"/>
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+  </node>
+</launch>

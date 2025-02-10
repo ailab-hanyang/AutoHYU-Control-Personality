@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Received from Shell Script -->    
+  <arg name="location" default=""/>
+
+  <!-- 'morai' or 'carmaker' or 'carla' -->   
+  <arg name="mode" default="carmaker" /> 
+
+  <arg name="proj_mode" default="utm" />
+
+  <arg name="roi" default="50" />
+
+  <!-- Grandpark -->
+  <arg name="ref_lat_grandpark" default="37.43461132" />
+  <arg name="ref_lon_grandpark" default="127.00669974" />
+
+  <!-- KATRI & KCity -->
+  <!-- <arg name="ref_lat_katri" default="37.22932413" />
+  <arg name="ref_lon_katri" default="126.77329780" /> -->
+  <arg name="ref_lat_katri" default="37.23855064" />
+  <arg name="ref_lon_katri" default="126.77253029" />
+
+  <!-- MORAI Scenario -->
+  <arg name="ref_lat_morai" default="0.0" />
+  <arg name="ref_lon_morai" default="0.0" />
+
+  <!-- CARLA Scenario -->
+  <arg name="ref_lat_carla" default="0.0" />
+  <arg name="ref_lon_carla" default="0.0" />
+  <arg name="role_name" default="ego_vehicle" />
+
+<!-- mode == carmaker -->
+  <include file="$(find carmaker)/launch/bridge.launch" if="$(eval mode=='carmaker')">
+    <arg name="location" value="$(arg location)" />
+    <arg name="proj_mode" value="$(arg proj_mode)" />
+    <!-- Grandpark -->
+    <arg name="ref_lat" value="$(arg ref_lat_grandpark)" if="$(eval location=='grandpark')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_grandpark)" if="$(eval location=='grandpark')"/>
+
+    <!-- kcity or katri -->
+    <arg name="ref_lat" value="$(arg ref_lat_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+    
+  </include>
+<!--  -->
+
+<!-- mode == morai -->
+  <include file="$(find morai)/launch/bridge.launch" if="$(eval mode=='morai')">
+    <arg name="location" value="$(arg location)" />
+    <arg name="proj_mode" value="$(arg proj_mode)" />
+    <arg name="roi" value="$(arg roi)" />
+    <!-- Grandpark -->
+    <arg name="ref_lat" value="$(arg ref_lat_grandpark)" if="$(eval location=='grandpark')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_grandpark)" if="$(eval location=='grandpark')"/>
+
+    <!-- kcity or katri -->
+    <arg name="ref_lat" value="$(arg ref_lat_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+
+    <!-- kcity or katri -->
+    <arg name="ref_lat" value="$(arg ref_lat_morai)" if="$(eval location=='morai')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_morai)" if="$(eval location=='morai')"/>
+  </include>
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" if="$(eval mode=='morai')"/>
+<!--  -->
+
+<!-- mode == carla -->
+  <include file="$(find carla)/launch/bridge.launch" if="$(eval mode=='carla')">
+    <arg name="location" value="$(arg location)" />
+    <arg name="role_name" value="$(arg role_name)" />
+    <arg name="roi" value="$(arg roi)" />
+    <!-- Grandpark -->
+    <arg name="ref_lat" value="$(arg ref_lat_grandpark)" if="$(eval location=='grandpark')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_grandpark)" if="$(eval location=='grandpark')"/>
+
+    <!-- kcity or katri -->
+    <arg name="ref_lat" value="$(arg ref_lat_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+
+    <!-- kcity or katri -->
+    <arg name="ref_lat" value="$(arg ref_lat_carla)" if="$(eval location=='carla')"/>
+    <arg name="ref_lon" value="$(arg ref_lon_carla)" if="$(eval location=='carla')"/>
+  </include>
+<!--  -->
+</launch>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="mode" default="morai" /> 
+  <!-- 'morai' or 'carmaker' or 'carla' or 'real'-->   
+
+
+  <param name="param_estimate_mode" value="$(arg mode)" />
+  <node pkg="param_estimation" type="steering_ratio_estimation.py" name="steering_ratio_estimation" output="screen" />
+  
+
+</launch>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>model_validation</name>
+  <version>0.0.0</version>
+  <description>The model_validation package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="sunghoon8585@gmail.com">Sunghoon.Park</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <license>TODO</license>
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>autohyu_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>autohyu_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>autohyu_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+  </export>
+</package>

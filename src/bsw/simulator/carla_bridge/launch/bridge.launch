@@ -1,0 +1,48 @@
+<!-- -->
+<launch>  
+  <!-- Received from higher launch -->
+  <arg name="location" default="carla" />
+
+  <arg name="proj_mode" default="local_cartesian" /> 
+
+  <!-- Default : kcity -->
+  <arg name="ref_lat" default="" />
+  <arg name="ref_lon" default="" />
+
+  <arg name="role_name" default="hero" />
+
+  <!-- Object ROI -->
+  <arg name="roi" default="150" />  
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+
+  <!-- vehicle driver -->
+  <node pkg="carla" type="vehicle_driver_carla" name="vehicle_driver" output="log" respawn="true">
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+    
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+  
+  <!-- route driver -->
+  <node pkg="carla" type="route_driver_carla" name="route_driver" output="log" respawn="true">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
+  <!-- object driver -->
+  <node pkg="carla" type="object_driver_carla" name="object_driver" output="screen" respawn="true">
+    <param name="roi" value="$(arg roi)"/>
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+  
+  <!-- vehicle control -->
+  <node pkg="carla" type="vehicle_control_carla" name="vehicle_control" output="log" respawn="true">
+    <param name="role_name" value="$(arg role_name)"/>
+  </node>
+
+  <!-- traffic driver -->
+  <!-- <node pkg="morai" type="traffic_driver_morai" name="traffic_driver" output="screen" respawn="true"/> -->
+  
+</launch>  

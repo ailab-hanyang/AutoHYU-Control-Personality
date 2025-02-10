@@ -1,0 +1,5 @@
+<!-- -->
+<launch>    
+    <rosparam file="config/rosparam_system.yaml" command="load"/>
+    <node pkg="integrate_control" type="integrate_control" name="integrate_control" output="screen" respawn="true"/>
+</launch>

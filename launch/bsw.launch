@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find novatel_oem7_driver)/launch/oem7_tty.launch">
+  </include>
+
+  <include file="$(find kvaser_interface)/launch/kvaser_can_bridge.launch">
+  </include>
+
+  <include file="$(find can_parser)/launch/can_parser.launch">
+  </include>
+
+  <include file="$(find can_transmitter)/launch/can_transmitter.launch">
+  </include>
+
+<!--  -->
+</launch>

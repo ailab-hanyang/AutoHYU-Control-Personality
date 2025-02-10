@@ -1,0 +1,43 @@
+<launch>
+    <arg name="location"    default="kcity"/>
+    <arg name="mode"        default="real"/>
+  
+    <!-- Grandpark -->
+    <arg name="ref_lat_grandpark" default="37.43461132" />
+    <arg name="ref_lon_grandpark" default="127.00669974" />
+
+    <!-- KATRI & KCity -->
+    <arg name="ref_lat_katri" default="37.23855064" />
+    <arg name="ref_lon_katri" default="126.77253029" />
+
+    <!-- Hanyang (ParkingLot) -->
+    <arg name="ref_lat_hanyang" default="37.555002" />
+    <arg name="ref_lon_hanyang" default="127.045847" />
+
+    <!-- Konkuk -->
+    <arg name="ref_lat_konkuk" default="37.5421000" />
+    <arg name="ref_lon_konkuk" default="127.0770500" />
+
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>
+    <node pkg="state_estimation" type="state_estimation" name="state_estimation" output="screen" respawn="true">
+        <param name="location"  value="$(arg location)"/>
+        <param name="mode"      value="$(arg mode)"/>   
+
+        <!-- Grandpark -->
+        <param name="ref_latitude" value="$(arg ref_lat_grandpark)" if="$(eval location=='grandpark')"/>
+        <param name="ref_longitude" value="$(arg ref_lon_grandpark)" if="$(eval location=='grandpark')"/>
+
+        <!-- KCity/KATRI -->
+        <param name="ref_latitude" value="$(arg ref_lat_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+        <param name="ref_longitude" value="$(arg ref_lon_katri)" if="$(eval location=='kcity' or location=='katri')"/>
+
+        <!-- hanyang -->
+        <param name="ref_latitude" value="$(arg ref_lat_hanyang)" if="$(eval location=='hanyang')"/>
+        <param name="ref_longitude" value="$(arg ref_lon_hanyang)" if="$(eval location=='hanyang')"/>
+
+        <!-- konkuk -->
+        <param name="ref_latitude" value="$(arg ref_lat_konkuk)" if="$(eval location=='konkuk')"/>
+        <param name="ref_longitude" value="$(arg ref_lon_konkuk)" if="$(eval location=='konkuk')"/>
+
+    </node>
+</launch>

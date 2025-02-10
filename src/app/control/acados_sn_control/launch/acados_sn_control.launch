@@ -1,0 +1,4 @@
+<?xml version="1.0"?> 
+<launch>
+	<node pkg='acados_sn_control' type='acados_sn_control_node.py' name='acados_sn_control' output='screen'/>
+</launch>

@@ -1,0 +1,16 @@
+<!-- -->
+<launch>
+  <arg name="location" default="" /> 
+  <arg name="proj_mode" default="" /> 
+  <arg name="ref_lat" default="" />
+  <arg name="ref_lon" default="" />
+
+  <rosparam file="config/system.yaml" command="load"/>   
+  <node pkg="carmaker" type="vehicle_driver" name="vehicle_driver" output="log" respawn="true">
+    <param name="location" value="$(arg location)"/>
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+  </node>
+</launch>

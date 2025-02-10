@@ -1,0 +1,5 @@
+<!-- -->
+<launch>    
+    <rosparam file="config/rosparam_system.yaml" command="load"/>
+    <node pkg="lateral_control" type="lateral_control" name="lateral_control" output="screen" respawn="true"/>
+</launch>

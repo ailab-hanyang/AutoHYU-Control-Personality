@@ -1,0 +1,5 @@
+<?xml version="1.0"?> 
+<launch>
+	<rosparam file="config/rosparam_system.yaml" command="load"/>
+	<node pkg='opti_planning' type='opti_planning.py' name='opti_planning' output='screen'/>
+</launch>

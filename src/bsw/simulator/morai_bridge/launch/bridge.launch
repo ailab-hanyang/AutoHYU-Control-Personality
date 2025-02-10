@@ -1,0 +1,41 @@
+<!-- -->
+<launch>  
+  <!-- Received from higher launch -->
+  <arg name="location" default="kcity"/>
+  <arg name="proj_mode" default="local_cartesian" /> 
+
+  <!-- Default : kcity -->
+  <arg name="ref_lat" default="" />
+  <arg name="ref_lon" default="" />
+
+  <!-- Object ROI -->
+  <arg name="roi" default="999" />  
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  <!-- object driver -->
+  <node pkg="morai" type="object_driver_morai" name="object_driver" output="log" respawn="true">
+    <param name="location" value="$(arg location)"/>
+
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+
+    <param name="roi" value="$(arg roi)"/>
+  </node>
+  
+  <!-- vehicle control -->
+  <node pkg="morai" type="vehicle_control_morai" name="vehicle_control" output="screen" respawn="true"/>
+  
+  <!-- vehicle driver -->
+  <node pkg="morai" type="vehicle_driver_morai" name="vehicle_driver" output="log" respawn="true">
+    <param name="location" value="$(arg location)"/>
+    
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+    
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+  </node>
+
+  <!-- traffic driver -->
+  <node pkg="morai" type="traffic_driver_morai" name="traffic_driver" output="screen" respawn="true"/>
+  
+</launch>  

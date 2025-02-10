@@ -1,0 +1,7 @@
+<!-- -->
+<launch>
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg="personality_extraction" type="personality_time_window" name="personality_time_window" output="screen" respawn="true" >
+        <param name="user_name" value="DefaultUser"/>
+    </node>
+</launch>

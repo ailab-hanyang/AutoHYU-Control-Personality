@@ -1,0 +1,5 @@
+<!-- -->
+<launch>
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg="grip_manager" type="grip_manager" name="grip_manager" output="screen" respawn="true"/>
+</launch>

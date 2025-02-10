@@ -1,0 +1,7 @@
+<launch>
+	<arg name="tf_stamp_from_vehicle_state"    default="false"/>	
+	<rosparam file="config/rosparam_system.yaml" command="load" />
+	<node pkg="tf_dynamic" type="tf_dynamic.py" name="tf_dynamic" output="screen" respawn="true">
+		<param name="tf_stamp_from_vehicle_state"  value="$(arg tf_stamp_from_vehicle_state)"/>
+	</node>
+</launch>

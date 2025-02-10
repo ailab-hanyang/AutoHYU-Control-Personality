@@ -1,0 +1,14 @@
+<!-- -->
+<launch>  
+  <arg name="location" default="" /> 
+  <arg name="ref_lat" default="" />
+  <arg name="ref_lon" default="" />
+
+  <rosparam file="config/system.yaml" command="load"/>   
+  <node pkg="morai" type="object_driver" name="object_driver" output="log" respawn="true">
+    <param name="location" value="$(arg location)"/>
+
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+  </node>
+</launch>

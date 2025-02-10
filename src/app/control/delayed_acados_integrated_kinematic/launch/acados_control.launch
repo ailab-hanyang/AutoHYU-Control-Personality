@@ -1,0 +1,5 @@
+<?xml version="1.0"?> 
+<launch>
+	<rosparam file="config/rosparam_system.yaml" command="load"/>
+	<node pkg='delayed_acados_integrated_kinematic' type='acados_control.py' name='delayed_integrated_kinematic' output='screen'/>
+</launch>

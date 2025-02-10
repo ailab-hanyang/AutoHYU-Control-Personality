@@ -1,0 +1,39 @@
+<!-- -->
+<launch>
+    <arg name="location"    default="kcity"/>
+    <arg name="mode"        default="morai"/>
+
+    <arg name="ip"          default="127.0.0.1"/>
+    <arg name="port"        default="7604"/>
+
+    <arg name="speed_kph"   default="0.0"/>
+
+    <arg name="ref_lat_kcity" default="37.23855064" />
+    <arg name="ref_lon_kcity" default="126.77253029" /> 
+    
+    <arg name="init_pose_path_morai" default="$(find control_evaluation)/../../../../../resources/map/morai/katri_empty_zone.json" />
+    
+    <!-- <arg name="map_file_path_morai" default="$(find control_evaluation)/../../../../../resources/map/morai/control_validation" /> -->
+    <!-- <arg name="map_file_path_morai" default="$(find control_evaluation)/../../../../../resources/map/morai/short_maps" /> -->
+    <arg name="map_file_path_morai" default="$(find control_evaluation)/../../../../../resources/map/morai/one_map_cycle_dir" />
+    
+
+
+
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg="control_evaluation" type="scenario_manager.py" name="scenario_manager" output="screen" respawn="true" launch_prefix="python3">
+        <param name="mode"      value="$(arg mode)"/>   
+        <param name="ref_lat"  value="$(arg ref_lat_kcity)" if="$(eval location=='kcity')"/>
+        <param name="ref_lon"  value="$(arg ref_lon_kcity)" if="$(eval location=='kcity')"/>
+        
+        <param name="map_file_path" value="$(arg map_file_path_morai)" if="$(eval mode=='morai')"/>
+        <param name="init_pose_path" value="$(arg init_pose_path_morai)" if="$(eval mode=='morai')"/>
+        <param name="init_speed"    value="$(arg speed_kph)"/>
+
+        <param name="udp_ip"        value="$(arg ip)"/>
+        <param name="udp_port"      value="$(arg port)"/>
+
+        <param name="check_scene_change_x"  value="-3405.7662"/>
+        <param name="check_scene_change_y"  value="1081.0701"/>
+    </node>
+</launch>

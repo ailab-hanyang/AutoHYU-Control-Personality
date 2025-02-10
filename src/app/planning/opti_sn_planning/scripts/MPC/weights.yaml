@@ -1,0 +1,45 @@
+weights:
+  s_w: 0.005
+  d_w: 20.0
+  mu_w: 500.0
+  speed_w: 0.6
+  delta_w: 1000.0 #200
+  accel_w: 40.0
+  ddelta_w: 500
+  jerk_w: 0.001
+  obj_w: 0
+
+
+weights_0:
+  s_w: 0
+  d_w: 10.0
+  mu_w: 3.0
+  speed_w: 0.0
+  delta_w: 200.0 #100
+  accel_w: 4.0
+  ddelta_w: 200
+  jerk_w: 0.1
+  obj_w: 0
+
+
+weights_e:
+  s_w: 0.003
+  d_w: 1.0
+  mu_w: 2000.0
+  speed_w: 0.0
+  delta_w: 0.1
+  accel_w: 0.01
+  ddelta_w: 50
+  jerk_w: 0.1
+  obj_w: 0.0
+
+constraints:
+  min_speed: -0.1
+  max_speed: 20.1
+  max_ay: 2
+  max_ax: 2
+  min_ax: -3
+  max_delta: 0.79
+  max_collision_boundary: 3.5
+  bumper_extra_gap: 4
+  lane_safety_gap: 1.0

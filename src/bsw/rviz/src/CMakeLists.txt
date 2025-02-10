@@ -1,0 +1,8 @@
+add_subdirectory(rviz)
+add_subdirectory(image_view)
+if (CATKIN_ENABLE_TESTING)
+  add_subdirectory(test)
+endif()
+if (QT_VERSION_MAJOR EQUAL 5)
+  add_subdirectory(python_bindings)
+endif()

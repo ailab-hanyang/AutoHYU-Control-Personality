@@ -1,0 +1,59 @@
+topic_name:
+  vehicle_state: /app/loc/vehicle_state
+
+  lidar_points: /velodyne_points
+  
+
+  lidar_objects: /app/perc/lidar_objects
+
+  tracked_objects: /app/perc/track_objects
+
+  vehicle_can: /bsw/vehicle_can
+
+
+# Task period [s]
+task_period:
+  ## BSW
+  period_can_parser: 0.0001
+  period_can_transmitter: 0.001
+  period_virtual_object_generator: 0.01
+
+  ## RTE
+  period_tf_dynamic: 0.01
+  period_tf_static: 10
+
+  ## HMI
+
+  ## SIM
+  period_route_driver: 0.05
+  period_traffic_driver: 0.05
+  period_vehicle_driver: 0.05
+  period_object_driver: 0.05
+  period_vehicle_control: 0.05
+
+  ## APP
+  # Localization
+  period_state_estimation: 0.01
+  period_delayed_state: 0.05  # same as carmaker
+  
+  # Perception
+  period_radar_detection: 0.1
+  period_camera_detection: 0.1
+  period_motion_prediction: 0.02
+
+  # Planning
+  period_map_loader: 1.0
+  period_goalpoint_planning: 0.1
+  period_global_planning: 0.1
+  period_behavior_planning: 0.05
+  period_trajectory_planning: 0.05
+  
+  # Control
+  period_lateral_control: 0.02
+  period_longitudinal_control: 0.01
+  period_integrate_control: 0.02
+  period_grip_manager: 0.01
+  period_personality_extraction: 0.05
+
+  # Template
+  period_template_node: 0.001

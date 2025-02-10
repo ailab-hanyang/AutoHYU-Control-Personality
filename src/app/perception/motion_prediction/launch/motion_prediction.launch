@@ -1,0 +1,11 @@
+<!-- -->
+<launch>
+    <arg name="location"    default="kcity"/>
+    <arg name="mode"        default="real"/>
+
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>   
+    <node pkg="motion_prediction" type="motion_prediction" name="motion_prediction" output="screen" respawn="true">
+        <param name="location"  value="$(arg location)"/>
+        <param name="mode"      value="$(arg mode)"/>   
+    </node>
+</launch>

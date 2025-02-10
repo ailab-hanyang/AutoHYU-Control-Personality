@@ -1,0 +1,5 @@
+<?xml version="1.0"?> 
+<launch>
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg='personality_extraction' type='personality_weight_bayesopt_node.py' name='personality_weight_bayesopt' output='screen'/>
+</launch>

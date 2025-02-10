@@ -1,0 +1,15 @@
+<!-- -->
+<launch>
+  <rosparam file="config/rosparam_system.yaml" command="load"/>  
+
+<!-- KCITY Personality Map -->
+  <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/kcity/seheon_late_sine_5to50_2_2_mps2_1.5mps2.csv,
+    $(find vils_object_generator)/scenarios/kcity/straight_static_obstacle_2.csv,
+    $(find vils_object_generator)/scenarios/kcity/Kcity_Highway_Double_LaneChange_auto_random_yaw_static2.csv]" 
+  />
+
+  <node pkg="vils_object_generator" type="vils_object_generator" name="vils_object_generator" output="screen" respawn="true">
+    <param name="csv_path" value="$(arg csv_path)"/>
+    <!-- <param name="csv_noise_path" value="$(arg csv_noise_path)"/> -->
+  </node>
+</launch>

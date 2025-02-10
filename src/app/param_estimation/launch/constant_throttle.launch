@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- TODO : make another modes -->
+  <arg name="mode" default="morai" /> 
+  <arg name="max_vel" default="150.0" />
+  <arg name="throttle" default="1.0" />
+  <arg name="brake" default="0.0" />
+
+  <param name="const_throttle_mode" value="$(arg mode)" />
+  <param name="const_throttle_max_vel" value="$(arg max_vel)" />
+  <param name="const_throttle_input" value="$(arg throttle)" />
+  <param name="const_brake_input" value="$(arg brake)" />
+  <node pkg="param_estimation" type="constant_throttle.py" name="const_throttle" output="screen" />
+  
+</launch>

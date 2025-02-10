@@ -1,0 +1,13 @@
+# --- Distance params
+Tp    : 3.0     # prediction horizon [s]
+Ts_MPC: 0.05  # MPC prediction discretization step [s]
+
+# --- Controller
+# MPC_type : 'NMPC'
+MPC_param_file : 'ioniq5/MPC_params.yaml'
+# --- Model
+MPC_model : 'dynamic_stm_pacejka'
+veh_params_file_MPC  : "ioniq5/veh_params_pred.yaml"
+tire_params_file_MPC : "ioniq5/pacejka_params.yaml"
+
+# --- Fallback params

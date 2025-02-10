@@ -1,0 +1,59 @@
+<!-- -->
+<launch>
+    <arg name="location" default="kcity" /> 
+    
+    <!-- KCity -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/kcity/kcity.osm" /> -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/kcity/kcity_new_test.osm" /> -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/kcity/test_map_kcity.osm" /> -->
+    <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/kcity/seheon_late.osm" />
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/kcity/Kcity_Highway_Double_LaneChange.osm" /> -->
+
+
+    <!-- KCITY Test (in MORAI) -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/morai/control_validation/normal_dlc.osm" /> -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/morai/control_validation/CR30.osm" /> -->
+    <!-- <arg name="map_file_kcity" default="$(find waypoint_planning)/../../../../resources/map/morai/control_validation/sinewave.osm" /> -->
+
+    <arg name="ref_lat_kcity" default="37.23855064" />
+    <arg name="ref_lon_kcity" default="126.77253029" />  
+
+    <arg name="map_file_hanyang" default="$(find waypoint_planning)/../../../../resources/map/hanyang_parking_lot_ori.osm" />
+    <arg name="ref_lat_hanyang" default="37.555002" />
+    <arg name="ref_lon_hanyang" default="127.045847" />  
+
+    <arg name="map_file_carla" default="$(find waypoint_planning)/../../../../resources/map/carla/town10_test.osm" />
+    <arg name="ref_lat_carla" default="0.0" />
+    <arg name="ref_lon_carla" default="0.0" /> 
+
+    <arg name="map_file_konkuk" default="$(find waypoint_planning)/../../../../resources/map/konkuk/ilgam_cpt7.osm" />
+    <arg name="ref_lat_konkuk" default="37.5421000" />
+    <arg name="ref_lon_konkuk" default="127.0770500" />  
+
+    <rosparam file="config/rosparam_system.yaml" command="load"/>   
+    <node pkg="waypoint_planning" type="waypoint_planning" name="waypoint_planning" output="screen" respawn="true">
+        <param name="location" value="$(arg location)"/>    
+
+        <!-- KCity -->
+        <param name="map_file" value="$(arg map_file_kcity)" if="$(eval location=='kcity')"/>
+        <param name="ref_lat" value="$(arg ref_lat_kcity)" if="$(eval location=='kcity')"/>
+        <param name="ref_lon" value="$(arg ref_lon_kcity)" if="$(eval location=='kcity')"/>
+
+        <!-- Hanyang -->
+        <param name="map_file" value="$(arg map_file_hanyang)" if="$(eval location=='hanyang')"/>
+        <param name="ref_lat" value="$(arg ref_lat_hanyang)" if="$(eval location=='hanyang')"/>
+        <param name="ref_lon" value="$(arg ref_lon_hanyang)" if="$(eval location=='hanyang')"/>
+
+
+        <!-- Carla -->
+        <param name="map_file" value="$(arg map_file_carla)" if="$(eval location=='carla')"/>
+        <param name="ref_lat" value="$(arg ref_lat_carla)" if="$(eval location=='carla')"/>
+        <param name="ref_lon" value="$(arg ref_lon_carla)" if="$(eval location=='carla')"/>
+
+        <!-- Konkuk -->
+        <param name="map_file" value="$(arg map_file_konkuk)" if="$(eval location=='konkuk')"/>
+        <param name="ref_lat" value="$(arg ref_lat_konkuk)" if="$(eval location=='konkuk')"/>
+        <param name="ref_lon" value="$(arg ref_lon_konkuk)" if="$(eval location=='konkuk')"/>
+
+    </node>
+</launch>

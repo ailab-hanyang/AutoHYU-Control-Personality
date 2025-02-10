@@ -1,0 +1,11 @@
+<!-- -->
+<launch>
+    <arg name="mode"        default="real"/>
+    <arg name="vehicle"     default="hmg_ioniq"/>
+
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg="can_parser" type="can_parser" name="can_parser" output="screen" respawn="true">
+        <param name="mode"      value="$(arg mode)"/>
+        <param name="vehicle"   value="$(arg vehicle)"/>
+    </node>
+</launch>

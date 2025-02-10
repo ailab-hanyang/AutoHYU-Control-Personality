@@ -1,0 +1,12 @@
+uint64 id
+uint16 on_ego
+bool on_shortest_path
+float64 x
+float64 y
+float64 z
+float64 yaw
+float64 curvature
+float64 ref_speed
+float64 speed
+autohyu_msgs/BehaviorBoundaryPoint lb_point
+autohyu_msgs/BehaviorBoundaryPoint rb_point

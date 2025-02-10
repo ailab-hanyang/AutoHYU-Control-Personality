@@ -1,0 +1,9 @@
+float32 x
+float32 y
+float32 yaw
+float32 vel_mps
+float32 delta
+float32 ax
+float32 ay
+float32 jx
+float32 jy

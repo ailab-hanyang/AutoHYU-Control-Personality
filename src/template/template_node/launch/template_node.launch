@@ -1,0 +1,11 @@
+<!-- -->
+<launch>
+    <arg name="location"    default="kcity"/>
+    <arg name="mode"        default="real"/>
+
+    <rosparam file="config/rosparam_system.yaml"    command="load"/>    
+    <node pkg="template_node" type="template_node" name="template_node" output="screen" respawn="true">
+        <param name="location"  value="$(arg location)"/>
+        <param name="mode"      value="$(arg mode)"/>   
+    </node>
+</launch>

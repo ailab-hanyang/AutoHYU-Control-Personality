@@ -1,0 +1,5 @@
+<?xml version="1.0"?> 
+<launch>
+    <rosparam file="$(find acados_scc_control)/../../../../config/rosparam_system.yaml" command="load"/>
+	<node pkg='acados_scc_control' type='acados_scc_control_node.py' name='acados_scc_control' output='screen'/>
+</launch>

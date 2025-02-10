@@ -1,0 +1,18 @@
+<!-- -->
+<launch>
+  <arg name="proj_mode" default="local_cartesian" /> 
+  <arg name="ref_lat" default="0.0" />
+  <arg name="ref_lon" default="0.0" />
+  <arg name="role_name" default="hero" />
+  <!-- <arg name="role_name" default="ego_vehicle" /> -->
+
+  <rosparam file="config/rosparam_system.yaml" command="load"/>   
+  <node pkg="carla" type="vehicle_driver_carla" name="vehicle_driver" output="screen" respawn="true">
+    <param name="proj_mode" value="$(arg proj_mode)"/>
+
+    <param name="ref_lat" value="$(arg ref_lat)"/>
+    <param name="ref_lon" value="$(arg ref_lon)"/>
+
+    <param name="role_name" value="$(arg role_name)"/>    
+  </node>
+</launch>

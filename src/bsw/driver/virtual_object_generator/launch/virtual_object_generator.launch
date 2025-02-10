@@ -1,0 +1,425 @@
+<!-- -->
+<launch>
+  <rosparam file="config/rosparam_system.yaml" command="load"/>  
+
+
+<arg name="csv_noise_path" default="[$(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_3.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_5.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_8.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_9.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_3.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_5.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_8.csv,
+                                     $(find virtual_object_generator)/tracking_noise/real_track_noise_for_ViLS_9.csv]" />
+  
+ <!-- Integrate Final TEST map -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/speedway/1108_practice_center_sine_25to31_7.5_4_mps2_7.5mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/speedway/1108_practice_race_line_sine_25to31_7.5_4_mps2_7.5mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/speedway/1108_practice2_center_sine_25to31_7.5_4_mps2_7.5mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/speedway/1108_practice2_race_line_sine_25to31_7.5_4_mps2_7.5mps2.csv]" /> -->
+
+
+<!-- Steertest FINAL TEST start map -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed1_race_line_sine_0to30_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed2_center_sine_0to30_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed3_race_line_sine_0to30_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed4_opt_race_line_sine_0to30_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed5_center_sine_0to30_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/first_lap/using/seed6_race_line_sine_0to30_3_4_mps2_8mps2.csv]" /> -->
+
+
+<!-- Steertest FINAL TEST TOTAL map slow start -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed1_race_line_90to110.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed2_race_line_85to100.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed3_race_line_80to90.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed4_race_line_75to85.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed5_race_line_70to80.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap_slow_start/seed6_race_line_50to70.csv]" /> -->
+
+ <!-- Steertest FINAL TEST TOTAL map -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed1_race_line_sine_0to31_8_4_mps2_8mps2_90to110.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed2_center_sine_0to29_8_4_mps2_8mps2_85to100.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed3_race_line_sine_0to29_7_4_mps2_8mps2_80to90.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed4_race_line_sine_0to30_6.5_4_mps2_8mps2_75to85.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed5_opt_race_line_sine_0to28_6_4_mps2_7mps2_70to80.csv,
+                                 $(find virtual_object_generator)/scenarios/steertest_curvy/total_lap/seed6_center_sine_0to28_5_4_mps2_7mps2_50to70.csv]" /> -->
+
+ <!-- Integrate Final TEST map -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrate_final_not_starting_vehicle_auto_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrate_final_not_starting_vehicle_auto_static2.csv]" /> -->
+
+<!-- KCITY HIGHWAY-->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/kcity/straight_static_obstacle_1.csv,
+  $(find virtual_object_generator)/scenarios/kcity/straight_static_obstacle_2.csv],
+  $(find virtual_object_generator)/scenarios/kcity/Kcity_Highway_Double_LaneChange_auto_random_yaw_static2.csv]
+  " 
+  /> -->
+
+<!-- KCITY Personality Map -->
+  <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/kcity/seheon_late_sine_5to50_2_2_mps2_1.5mps2.csv,
+  $(find virtual_object_generator)/scenarios/kcity/straight_static_obstacle_2.csv],
+  $(find virtual_object_generator)/scenarios/kcity/Kcity_Highway_Double_LaneChange_auto_random_yaw_static2.csv]
+  " 
+  />
+
+<!-- INTEGRATE OVAL-->
+  <!-- Oval Dynamic constant -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/constant_40_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_50_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_60_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_70_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_80_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_90_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/constant_100_8mps2.csv]" /> -->
+
+  <!-- Oval Dynamic Sine -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/sine_30to50_3_8_mps2_7mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_40to60_3_8_mps2_7mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_50to70_3_8_mps2_7mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_60to80_3_8_mps2_7mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_70to90_3_8_mps2_7mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_80to100__3_8_mps2_7mps2.csv]" /> -->
+
+
+  <!-- Oval Dynamic Sine 1104-->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/sine_30to90_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_20to34_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_28to50_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_10to40_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_50to90_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_20to40_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/sine_10to50_3_8_mps2_8mps2.csv]" /> -->
+
+  <!-- Oval Dynamic Sine 1106-->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/oval_race_line_sine_50to60_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_race_line_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_right_sine_50to60_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_left_sine_50to60_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_center_sine_50to60_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_center_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_center_sine_40to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_right_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_right_sine_40to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_race_line_sine_40to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_left_sine_40to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/oval_left_sine_50to100_3_4_mps2_8mps2.csv]" /> -->
+
+
+  <!-- Oval Static -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_straight_8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_6.csv]" /> -->
+                                 <!-- ,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/integrated_test_oval_static_obstacle_corner_6.csv -->
+
+  <!-- Oval Static Random lat & yaw-->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static14.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static15.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static16.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static17.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static18.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static19.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static20.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static21.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static22.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static23.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static24.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static25.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/oval/static_object_lat_rand_auto_random_yaw_static26.csv]" /> -->
+
+
+
+<!-- INTEGRATE J-TURN -->
+<!-- integrate speedway parts T3-->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T3_auto_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T3_auto_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T3_auto_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T3_auto_static4.csv]" /> -->
+
+<!-- integrate speedway parts T4 & T5 -->
+  <!-- <arg name="csv_path" default="[$(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static1.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static2.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static3.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static4.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static5.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static6.csv,
+                                $(find virtual_obj/generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T4_T5_auto_static7.csv]" /> -->
+
+<!-- integrate speedway parts T7 & T8 -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T7_T8_auto_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T7_T8_auto_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T7_T8_auto_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T7_T8_auto_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T7_T8_auto_static5.csv]" /> -->
+
+
+<!-- integrate speedway parts T9 & T10 & T11 -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T9_T10_T11_auto_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T9_T10_T11_auto_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T9_T10_T11_auto_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T9_T10_T11_auto_static4.csv]" /> -->
+
+
+<!-- integrate speedway parts T12 -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_static5.csv]" /> -->
+
+<!-- integrate speedway parts Finish -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static1.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static2.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static3.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static4.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static5.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static6.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static7.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static8.csv,
+                                $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_static9.csv]" /> --> 
+
+<!-- integrate speedway parts Finish random yaw -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/katri_speedway_finish_lead_auto_random_yaw_static9.csv]" /> -->
+
+<!-- integrate speedway parts T3 RANDOM -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T3_auto_random_yaw_static14.csv]" /> -->
+
+<!-- integrate speedway parts T4 T5 RANDOM -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T4_T5_auto_random_yaw_static14.csv]" /> -->
+
+<!-- integrate speedway parts T7 T8 RANDOM -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T7_T8_auto_random_yaw_static11.csv]" /> -->
+
+<!-- integrate speedway parts T9 T10 T11 RANDOM -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static14.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_lat_rand_T9_T10_T11_auto_random_yaw_static15.csv]" /> -->
+
+<!-- integrate speedway parts T12 RANDOM -->
+  <!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/integrated_speedway_parts/integrated_speedway_raceline_T12_auto_random_yaw_static14.csv]" /> -->
+
+
+<!-- TOTAL MAP(j-turn + oval) --> 
+<!-- Whole Scenarios -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static11.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static12.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static13.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static14.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static15.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static16.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static17.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static18.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static19.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static20.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static21.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static22.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static23.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static24.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static25.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static26.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static27.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static28.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static29.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static30.csv]" /> -->
+
+  <!-- Scenario #1 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static1.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static11.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static21.csv]" /> -->
+
+  <!-- Scenario #2 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static12.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static22.csv]" /> -->
+
+  <!-- Scenario #3 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static3.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static13.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static23.csv]" /> -->
+                                 
+  <!-- Scenario #4 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static4.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static14.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static24.csv]" /> -->
+
+  <!-- Scenario #5 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static5.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static15.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static25.csv]" /> -->
+
+  <!-- Scenario #6 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static6.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static16.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static26.csv]" /> -->
+
+  <!-- Scenario #7 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static7.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static17.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static27.csv]" /> -->
+
+  <!-- Scenario #8 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static8.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static18.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static28.csv]" /> -->
+
+  <!-- Scenario #9 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static9.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static19.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static29.csv]" /> -->
+
+  <!-- Scenario #10 -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static10.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static20.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/integrate_total_lap_test_for_static_obstacles_auto_random_yaw_static30.csv]" /> -->                                                                                                   
+
+  <!-- Total map Dynamic Objects -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_trapezoidal_35kph_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_trapezoidal_60kph_3_8_mps2_8mps2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_left_sine_20to105_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_right_sine_20to105_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_center_sine_20to105_3_8_mps2_8mps2.csv,                            
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_sine_70to105_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_right_sine_70to105_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_left_sine_70to105_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_sine_30to40_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_sine_40to65_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_sine_50to95_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_sine_50to120_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_trapezoidal_90kph_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_trapezoidal_80kph_3_8_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/total_map/total_map_race_line_trapezoidal_70kph_3_8_mps2_8mps2.csv]" /> -->
+                                 
+  <!-- qual map Dynamic Objects (vel 50~100) -->
+<!-- <arg name="csv_path" default="[$(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_right_sine_70to90_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_right_sine_60to80_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_right_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_right_sine_50to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_race_line_sine_70to90_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_race_line_sine_60to80_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_race_line_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_race_line_sine_50to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_left_sine_70to90_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_left_sine_60to80_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_left_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_left_sine_50to70_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_center_sine_70to90_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_center_sine_60to80_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_center_sine_50to100_3_4_mps2_8mps2.csv,
+                                 $(find virtual_object_generator)/scenarios/integrate/qual/.csv,integrated_qual_center_sine_50to70_3_4_mps2_8mps2.csv]" /> -->
+
+
+
+
+
+  <node pkg="virtual_object_generator" type="virtual_object_generator" name="virtual_object_generator" output="screen" respawn="true">
+    <param name="csv_path" value="$(arg csv_path)"/>
+    <param name="csv_noise_path" value="$(arg csv_noise_path)"/>
+  </node>
+</launch>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- <param name="model_validation/vehicle/mass"                 value="1696" /> -->
+  <param name="model_validation/vehicle/mass"                 value="2300" />
+  <param name="model_validation/vehicle/wheel_radius"         value="0.355" />
+  <param name="model_validation/vehicle/vehicle_front_to_cg"  value="1.49" />
+  <param name="model_validation/vehicle/vehicle_rear_to_cg"   value="1.51" />
+  <param name="model_validation/vehicle/front_area"           value="2.52" />
+  <param name="model_validation/vehicle/air_drag_coeff"       value="0.3" />
+  <param name="model_validation/vehicle/rolling_resistance"   value="0.015" />
+  <param name="model_validation/air_density"                  value="1.205" />
+  <param name="model_validation/gravity_coeff"                value="9.806" />
+  <param name="model_validation/inertia"                      value="2637.526" />
+  
+  <param name="model_validation/Bf"                           value="10.0" />
+  <param name="model_validation/Cf"                           value="2.18" />
+  <param name="model_validation/Df"                           value="10420.0"/>
+  <param name="model_validation/Ef"                           value="1.068" />
+  <param name="model_validation/Br"                           value="10.0" />
+  <param name="model_validation/Cr"                           value="2.319" />
+  <param name="model_validation/Dr"                           value="6552.0"/>
+  <param name="model_validation/Er"                           value="1.068" />
+
+
+  <node pkg="model_validation" type="model_validation.py" name="model_validation" output="screen" />
+  
+</launch>
