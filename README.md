@@ -4,12 +4,12 @@ This repository is for submitting HMG’s Personality assignment results.
 ## Getting Start
 Please clone the project in your ${HOME}/git/ directory
 
-'''bash
+```bash
 mkdir -p ~/git && cd ~/git
 git clone https://github.com/ailab-hanyang/AutoHYU-Control-Personality.git
 cd ~/git/AutoHyu-Control-Personality
 catkin_make -DCMAKE_BUILD_TYPE=Release
-'''
+```
 
 ## Configuring Novatel Offset
 To set the Novatel offset, you can call the respective ROS services:
@@ -32,15 +32,15 @@ For more information on runtime operations and specific command usage, refer to 
 
 ## Excluding Specific Packages from the Build
 To exclude specific packages from the build process, use the following command:
-'''bash
+```bash
 catkin_make -DCMAKE_BUILD_TYPE=Release -DCATKIN_BLACKLIST_PACKAGES='lateral_control;longitudinal_control;'
-'''
+```
 
 ## ACADOS import issue (when it's installed but cannot find 'acados_template')
-'''bash
+```bash
 cd src/lib/acados/
 rm -rf c_generated_code/ include/ build/ lib/
 cd ..
 ./install_acados
 source ~/.bashrc
-'''
+```
