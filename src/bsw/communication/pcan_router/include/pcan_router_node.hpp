@@ -57,6 +57,8 @@
 // Parameter Header
 
 // Algorithm Header
+#include <autoku_can/autoku_can_process.hpp>
+
 
 // Namespace
 using namespace ros;
@@ -73,8 +75,6 @@ class PCANRouter : public TaskManager {
 
     public:
         void Run();
-        // void PublishAutoKUSTA();
-        // void PublishADCMD();
         void Publish();
         void ProcessINI();
         void ProcessRosparam(const ros::NodeHandle& nh);
@@ -92,22 +92,22 @@ class PCANRouter : public TaskManager {
             switch (msg.id)
             {
                 case CANID_GWAY1:
-                    ptr_auto_ku_can_process_->CallbackGway1(msg.data.data());
+                    ptr_auto_ku_can_process_->CallbackGway1(&msg.data[0]);
                     break;
                 // case CANID_AutoKUCMD:
                 //     ptr_auto_ku_can_process_->CallbackAutoKuCmd(msg.data.data());
                 //     break;
                 case CANID_AutoKU_HELTH:
-                    ptr_auto_ku_can_process_->CallbackAutoHelth(msg.data.data());
+                    ptr_auto_ku_can_process_->CallbackAutoKuHelth(&msg.data[0]);
                     break;
                 case CANID_AutoKU_ADMODE:
-                    ptr_auto_ku_can_process_->CallbackAdMode(msg.data.data());
+                    ptr_auto_ku_can_process_->CallbackAdMode(&msg.data[0]);
                     break;
                 case CANID_AutoKU_SIREN_ON_OFF:
-                    ptr_auto_ku_can_process_->CallbackSirenLedConfig(msg.data.data());
+                    ptr_auto_ku_can_process_->CallbackSirenLedConfig(&msg.data[0]);
                     break;
                 case CANID_E_FLAG:
-                    ptr_auto_ku_can_process_->CallbackEFlag(msg.data.data());
+                    ptr_auto_ku_can_process_->CallbackEFlag(&msg.data[0]);
                     break;
                 default:
                     break;
@@ -118,30 +118,20 @@ class PCANRouter : public TaskManager {
         inline void CallbackCANTX(const autohyu_msgs::FrameFD& msg)
         {
             mutex_can_tx_.lock();
-            ptr_auto_ku_can_process_->CallbackAutoKuCmd(msg.data.data());
+            ptr_auto_ku_can_process_->CallbackAutoKuCmd(&msg.data[0]);
             mutex_can_tx_.unlock();
         }
 
+    
+        // Update functions for subscribe variables
         void UpdateADCMD();
         void UpdateAutoKUSTA();
-
-        // Update functions for subscribe variables
-        void UpdateVehicleCommand(const interface::VehicleState& vehicle_state, 
-                                  const double& accel, 
-                                  const double& torque, 
-                                  const double& speed, 
-                                  const double& steer);
-        void UpdateKeyboardCommand(const interface::VehicleState& vehicle_state, 
-                                   const interface::VehicleCmd& keyboard_command);
-        void UpdateAutokuCanHealth(const uint8_t& health_sequence);
-        void UpdateAutokuCanAdMode(const interface::ADModeInput& ad_mode_input);    
-        void UpdateEFlag();
 
     private:
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
         // Variables
-        SYSTEM_t timer_10ms  = SYSTEM_NOW;
-        SYSTEM_t timer_100ms = SYSTEM_NOW; 
+        SYSTIME_t timer_10ms  = SYSTIME_NOW;
+        SYSTIME_t timer_100ms = SYSTIME_NOW; 
 
         // Subscriber
         Subscriber s_can_rx_; // Get Gway CAN data from kvaser

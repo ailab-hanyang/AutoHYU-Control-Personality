@@ -16,6 +16,7 @@ task_period:
   ## BSW
   period_can_parser: 0.0001
   period_can_transmitter: 0.001
+  period_pcan_router: 0.001
   period_virtual_object_generator: 0.01
 
   ## RTE

@@ -1,0 +1,8 @@
+prefix=/home/seheonha/git/AutoHYU-Control-Personality/devel
+
+Name: pcan_router
+Description: Description of pcan_router
+Version: 0.0.0
+Cflags: -I/home/seheonha/git/AutoHYU-Control-Personality/src/bsw/communication/pcan_router/include
+Libs: -L${prefix}/lib 
+Requires: 

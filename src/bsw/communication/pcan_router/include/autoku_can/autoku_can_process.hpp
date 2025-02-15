@@ -1,7 +1,9 @@
-#ifndef _AUTOKU_CAN_PROCESS_HPP_
-#define _AUTOKU_CAN_PROCESS_HPP_
+#ifndef __AUTOKU_CAN_PROCESS_HPP__
+#define __AUTOKU_CAN_PROCESS_HPP__
 
 #include "interface_candb.hpp"
+#include <stdint.h>
+#include <string.h> // for memcpy
 
 const float STOP_CONDITION_VEL_KPH = 10.0f;
 const uint32_t PARKING_TIME_CONDITION_US = 5e6; // 5 sec
@@ -106,6 +108,54 @@ typedef struct
     float R_MCU_Torque;                     // Nm
 } External_Decoded_GWAY1;
 /////////////////////////////////////////////////////////////////
+#pragma pack(push, 1) // For private struct memmory padding
+typedef union _AutoKU_CAN_HELTH_
+{
+    uint8_t data[DL_AutoKU_HEALTH]; // 1 bytes (8 bits)
+    struct
+    {
+        uint8_t health_sequence : 8; // 8
+    } str;
+} AutoKU_CAN_HELTH;
+#pragma pack(pop)
+
+
+#pragma pack(push, 1)
+typedef union _THREE_SECS_E_FLAG_
+{
+    uint8_t data[DLC_E_FLAG]; // 8 bytes (64 bits)
+    struct
+    {
+        uint8_t e_flag : 3;     // 3  | 0 "Ready" 1 "Start" 2 "Stop" 3 "Warning" 4 "Reserved" 5 "Reserved" 6 "Reserved" 7 "Reserved"
+        uint16_t reserve1 : 13; // 16
+        uint8_t aim : 3;        // 19
+        uint8_t reserve2 : 1;   // 20
+        uint8_t autoku_r : 3;   // 23
+        uint16_t reserve3 : 9;  // 32
+        uint8_t eurecar_r : 3;  // 35
+        uint8_t reserve4 : 1;   // 36
+        uint8_t kat : 3;        // 39
+        uint16_t reserve5 : 9;  // 48
+        uint8_t save : 3;       // 51
+        uint8_t reserve6 : 1;   // 52
+        uint8_t tayo : 3;       // 55
+        uint16_t reserve7 : 9;  // 64
+    } str;
+} THREE_SECS_E_FLAG;
+#pragma pack(pop)
+
+
+#pragma pack(push, 1) // For private struct memmory padding
+typedef union _INTERNAL_CAN_SIREN_ON_OFF_
+{
+    uint8_t data[DL_AutoKU_SIREN_ON_OFF]; // 2 bytes (16 bits)
+    struct
+    {
+        uint8_t siren_on_off : 8; // 8  | 0 "siren off" 1 "siren on" 2 "siren blink" 7 "e_flag mode"
+        uint8_t led_on_off : 8;   // 16 | 0 "led off" 1 "blue on" 2 "blue blink" 3 "orange on" 4 "orange blink" 5 "blue&orange on" 6 "blue&orange blink" 7 "e_flag mode"
+    } str;
+} INTERNAL_CAN_SIREN_ON_OFF;
+#pragma pack(pop)
 
 
 class AutoKuCanProcess
@@ -123,14 +173,14 @@ public:
     // Input Variables
     // Autonomous Mode
     bool i_b_mode_updated_;
-    INTERNAL_CAN_AD_MODE i_autoku_ad_mode_;
+    internal_can::INTERNAL_CAN_AD_MODE i_autoku_ad_mode_;
 
     // Autonomous Command
     uint8_t i_ui8_health_seq_number_;
-    INTERNAL_CAN_CMD i_autoku_can_cmd_;
+    internal_can::INTERNAL_CAN_CMD i_autoku_can_cmd_;
 
     // Vehicle gateway
-    External_CAN_GWAY1 i_vehicle_can_gway1_;
+    hmg_ioniq::External_CAN_GWAY1 i_vehicle_can_gway1_;
     External_Decoded_GWAY1 i_vehicle_gway1_;
 
     // Siren and LED configuration
@@ -142,12 +192,12 @@ public:
     /////////////////////////////////////////////////////////////////
     // Output Variables
     // Autonomous Mode
-    INTERNAL_CAN_STA o_autoku_can_sta_;
+    internal_can::INTERNAL_CAN_STA o_autoku_can_sta_;
 
     // Autonomous Command
 
     // Vehicle gateway
-    External_CAN_ADCMD o_vehicle_can_adcmd_;
+    hmg_ioniq::External_CAN_ADCMD o_vehicle_can_adcmd_;
 
     // Siren and LED configuration
 
@@ -196,8 +246,8 @@ public:
     // Autonomous Command
     void SteeringModeStatusUpdate();
     void AutoKuCmdUpdate();
-    void AutoKuLatCmdUpdate(External_CAN_ADCMD input_command);
-    void AutoKuLonCmdUpdate(External_CAN_ADCMD input_command);
+    void AutoKuLatCmdUpdate(hmg_ioniq::External_CAN_ADCMD input_command);
+    void AutoKuLonCmdUpdate(hmg_ioniq::External_CAN_ADCMD input_command);
     bool AutoKuCmdValidation();
 
     void GearShiftCmdUpdate(uint32_t time_now_us);
@@ -216,28 +266,28 @@ public:
     // Callback Fuctions
 
     // Autonomous Mode
-    void CallbackAdMode(uint8_t *data);
+    void CallbackAdMode(const uint8_t *data);
 
     // Autonomous Command
-    void CallbackAutoKuHelth(uint8_t *autoku_can_health_data);
-    void CallbackAutoKuCmd(uint8_t *autoku_can_cmd_data);
+    void CallbackAutoKuHelth(const uint8_t *autoku_can_health_data);
+    void CallbackAutoKuCmd(const uint8_t *autoku_can_cmd_data);
 
     // Vehicle gateway
-    void CallbackGway1(uint8_t *gway1_data);
+    void CallbackGway1(const uint8_t *gway1_data);
     
     // Siren and LED configuration
-    void CallbackSirenLedConfig(uint8_t *siren_speaker_data);
+    void CallbackSirenLedConfig(const uint8_t *siren_speaker_data);
 
     // Three Sec E Flag
-    void CallbackEFlag(uint8_t *e_flag_data);
+    void CallbackEFlag(const uint8_t *e_flag_data);
 
     /////////////////////////////////////////////////////////////////
     // Tools
 
     /////////////////////////////////////////////////////////////////
     // CAN message function
-    External_Decoded_GWAY1 DecodeDataCanGway1(const External_CAN_GWAY1 &can);
-    void InjectCanAutoKUCmdToCanAdcmd(const INTERNAL_CAN_CMD &autoku_cmd, External_CAN_ADCMD &adcmd);
+    External_Decoded_GWAY1 DecodeDataCanGway1(const hmg_ioniq::External_CAN_GWAY1 &can);
+    void InjectCanAutoKUCmdToCanAdcmd(const internal_can::INTERNAL_CAN_CMD &autoku_cmd, hmg_ioniq::External_CAN_ADCMD &adcmd);
 };
 
-#endif // _AUTOKU_CAN_PROCESS_HPP_
+#endif // __AUTOKU_CAN_PROCESS_HPP__

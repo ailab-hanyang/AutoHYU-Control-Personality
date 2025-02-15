@@ -1,4 +1,4 @@
-#include "autoku_can_process.hpp"
+#include "autoku_can/autoku_can_process.hpp"
 
 /////////////////////////////////////////////////////////////////
 // Constructor
@@ -25,10 +25,10 @@ AutoKuCanProcess::AutoKuCanProcess() : i_b_mode_updated_(false),
                                        ui32_time_last_cmd_seq_updated_us_(0),
                                        ui32_time_diff_from_last_cmd_seq_updated_us_(0)
 {
-    memset(&i_autoku_can_cmd_, 0, sizeof(INTERNAL_CAN_CMD));
-    memset(&i_vehicle_can_gway1_, 0, sizeof(External_CAN_GWAY1));
+    memset(&i_autoku_can_cmd_, 0, sizeof(internal_can::INTERNAL_CAN_CMD));
+    memset(&i_vehicle_can_gway1_, 0, sizeof(hmg_ioniq::External_CAN_GWAY1));
     memset(&i_vehicle_gway1_, 0, sizeof(External_Decoded_GWAY1));
-    memset(&o_autoku_can_sta_, 0, sizeof(INTERNAL_CAN_STA));
+    memset(&o_autoku_can_sta_, 0, sizeof(internal_can::INTERNAL_CAN_STA));
 }
 AutoKuCanProcess::~AutoKuCanProcess() {}
 
@@ -292,7 +292,7 @@ void AutoKuCanProcess::AutoKuCmdUpdate()
 {
     // Initialize vehicle command
     memset(o_vehicle_can_adcmd_.data, 0, DL_ADCMD);
-    External_CAN_ADCMD tmp_control_command;
+    hmg_ioniq::External_CAN_ADCMD tmp_control_command;
     memset(tmp_control_command.data, 0, DL_ADCMD);
     InjectCanAutoKUCmdToCanAdcmd(i_autoku_can_cmd_, tmp_control_command);
 
@@ -314,7 +314,7 @@ void AutoKuCanProcess::AutoKuCmdUpdate()
  * @param input_command: input vehicle control command can message
  * @param o_vehicle_can_adcmd_: target of vehicle control command injection
  */
-void AutoKuCanProcess::AutoKuLatCmdUpdate(External_CAN_ADCMD input_command)
+void AutoKuCanProcess::AutoKuLatCmdUpdate(hmg_ioniq::External_CAN_ADCMD input_command)
 {
     if (param_b_lateral_enable_ == 1)
     {
@@ -339,7 +339,7 @@ void AutoKuCanProcess::AutoKuLatCmdUpdate(External_CAN_ADCMD input_command)
  * @param input_command: input vehicle control command can message
  * @param o_vehicle_can_adcmd_: target of vehicle control command injection
  */
-void AutoKuCanProcess::AutoKuLonCmdUpdate(External_CAN_ADCMD input_command)
+void AutoKuCanProcess::AutoKuLonCmdUpdate(hmg_ioniq::External_CAN_ADCMD input_command)
 {
     // Control command set
     if (param_b_longitudinal_enable_ == 1)
@@ -512,7 +512,7 @@ bool AutoKuCanProcess::AutoKuCmdValidation()
 
 void AutoKuCanProcess::AutonomousCloseCmdUpdate()
 {
-    External_CAN_ADCMD tmp_control_command;
+    hmg_ioniq::External_CAN_ADCMD tmp_control_command;
     memset(tmp_control_command.data, 0, DL_ADCMD);
 
     // Longitudinal
@@ -575,7 +575,7 @@ void AutoKuCanProcess::Timer100msProcess(){
 // Callback Fuctions
 
 // Autonomous Mode
-void AutoKuCanProcess::CallbackAdMode(uint8_t *data)
+void AutoKuCanProcess::CallbackAdMode(const uint8_t *data)
 {
     if (data == NULL)
         return;
@@ -586,7 +586,7 @@ void AutoKuCanProcess::CallbackAdMode(uint8_t *data)
 }
 
 // Autonomous Command
-void AutoKuCanProcess::CallbackAutoKuHelth(uint8_t *autoku_can_health_data)
+void AutoKuCanProcess::CallbackAutoKuHelth(const uint8_t *autoku_can_health_data)
 {
     if (autoku_can_health_data == NULL)
         return;
@@ -596,7 +596,7 @@ void AutoKuCanProcess::CallbackAutoKuHelth(uint8_t *autoku_can_health_data)
     i_ui8_health_seq_number_ = health.str.health_sequence;
     return;
 }
-void AutoKuCanProcess::CallbackAutoKuCmd(uint8_t *autoku_can_cmd_data)
+void AutoKuCanProcess::CallbackAutoKuCmd(const uint8_t *autoku_can_cmd_data)
 {
     if (autoku_can_cmd_data == NULL)
         return;
@@ -606,7 +606,7 @@ void AutoKuCanProcess::CallbackAutoKuCmd(uint8_t *autoku_can_cmd_data)
 }
 
 // Vehicle gateway
-void AutoKuCanProcess::CallbackGway1(uint8_t *gway1_data)
+void AutoKuCanProcess::CallbackGway1(const uint8_t *gway1_data)
 {
     if (gway1_data == NULL)
         return;
@@ -617,7 +617,7 @@ void AutoKuCanProcess::CallbackGway1(uint8_t *gway1_data)
 }
 
 // Siren and LED configuration
-void AutoKuCanProcess::CallbackSirenLedConfig(uint8_t *siren_speaker_data)
+void AutoKuCanProcess::CallbackSirenLedConfig(const uint8_t *siren_speaker_data)
 {
     if (siren_speaker_data == NULL)
         return;
@@ -695,7 +695,7 @@ void AutoKuCanProcess::CallbackSirenLedConfig(uint8_t *siren_speaker_data)
 }
 
 // Three Sec E Flag
-void AutoKuCanProcess::CallbackEFlag(uint8_t *e_flag_data)
+void AutoKuCanProcess::CallbackEFlag(const uint8_t *e_flag_data)
 {
     if (e_flag_data == NULL)
         return;
@@ -705,7 +705,7 @@ void AutoKuCanProcess::CallbackEFlag(uint8_t *e_flag_data)
 }
 
 
-External_Decoded_GWAY1 DecodeDataCanGway1(const External_CAN_GWAY1 &can)
+External_Decoded_GWAY1 AutoKuCanProcess::DecodeDataCanGway1(const hmg_ioniq::External_CAN_GWAY1 &can)
 {
     External_Decoded_GWAY1 decode_gway1;
 
@@ -732,7 +732,7 @@ External_Decoded_GWAY1 DecodeDataCanGway1(const External_CAN_GWAY1 &can)
     return decode_gway1;
 }
 
-void InjectCanAutoKUCmdToCanAdcmd(const INTERNAL_CAN_CMD &autoku_cmd, External_CAN_ADCMD &adcmd)
+void AutoKuCanProcess::InjectCanAutoKUCmdToCanAdcmd(const internal_can::INTERNAL_CAN_CMD &autoku_cmd, hmg_ioniq::External_CAN_ADCMD &adcmd)
 {
     float target_steering_angle = autoku_cmd.str.target_steering_angle * AutoKUCMD_STEERING_ANGLE_SCALE;
     // float target_acceleration = autoku_cmd.str.target_acceleration * AutoKUCMD_ACCELERATION_SCALE; // Used in LAB ONIQ ver

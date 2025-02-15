@@ -70,7 +70,8 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_SOURCE_DIR}/lib/spline/spline.cpp
     
     # Node and Algorithm
-    src/autoku_can_process.cpp 
+    src/pcan_router_node.cpp
+    src/autoku_can/autoku_can_process.cpp 
 )
 
 
@@ -84,4 +85,6 @@ add_dependencies(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     ${catkin_LIBRARIES}
+    ${Boost_LIBRARIES}
+    Eigen3::Eigen
 )
