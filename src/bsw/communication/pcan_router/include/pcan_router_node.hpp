@@ -14,13 +14,13 @@
 
 
 // get the current time
-#define	SYSTIME_NOW		( TIM2->CNT)
-// max for this MCU
-#define	SYSTIME_MAX		0xFFFFFFFF
-// calc a timediff
-#define	SYSTIME_DIFF( first, second)		(((first)<=(second)) ? ((second)-(first)):((SYSTIME_MAX-(first))+(second)+1U))
-// this is our basetype for time calculations
-#define	SYSTIME_t	uint32_t
+// #define	SYSTIME_NOW		( TIM2->CNT)
+// // max for this MCU
+// #define	SYSTIME_MAX		0xFFFFFFFF
+// // calc a timediff
+// #define	SYSTIME_DIFF( first, second)		(((first)<=(second)) ? ((second)-(first)):((SYSTIME_MAX-(first))+(second)+1U))
+// // this is our basetype for time calculations
+// #define	SYSTIME_t	uint32_t
 
 #define TIME_100_MS 1e5
 #define TIME_10_MS 1e4
@@ -127,11 +127,15 @@ class PCANRouter : public TaskManager {
         void UpdateADCMD();
         void UpdateAutoKUSTA();
 
+        // Get time difference
+        uint32_t GetTimeDifference(const uint32_t& current_time, const uint32_t& prev_time);
+
     private:
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
         // Variables
-        SYSTIME_t timer_10ms  = SYSTIME_NOW;
-        SYSTIME_t timer_100ms = SYSTIME_NOW; 
+        uint32_t current_time_; 
+        uint32_t timer_10ms_;
+        uint32_t timer_100ms_; 
 
         // Subscriber
         Subscriber s_can_rx_; // Get Gway CAN data from kvaser

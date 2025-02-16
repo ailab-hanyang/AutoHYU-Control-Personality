@@ -1,0 +1,5 @@
+<launch>    
+    <rosparam file="config/rosparam_system.yaml" command="load"/>
+    <node pkg="pcan_router" type="pcan_router" name="pcan_router" output="screen" respawn="true">
+    </node>
+</launch>

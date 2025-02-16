@@ -331,11 +331,11 @@ int main(int argc, char** argv)
     // Register publisher and subscriber
     if (is_canfd) {
       can_rx_pub = n.advertise<autohyu_msgs::FrameFD>("can_rx" + std::to_string(circuit_id), 500);
-      can_tx_sub = n.subscribe("can_tx" + std::to_string(circuit_id), 500, canfd_tx_callback);
+      can_tx_sub = n.subscribe("pcan_tx" + std::to_string(circuit_id), 500, canfd_tx_callback);
     }
     else {
       can_rx_pub = n.advertise<can_msgs::Frame>("can_rx" + std::to_string(circuit_id), 500);
-      can_tx_sub = n.subscribe("can_tx" + std::to_string(circuit_id), 500, can_tx_callback);
+      can_tx_sub = n.subscribe("pcan_tx" + std::to_string(circuit_id), 500, can_tx_callback);
     }
 
     if (ret == ReturnStatuses::OK)

@@ -32,7 +32,12 @@ PCANRouter::PCANRouter(std::string node_name, double period)
     s_can_tx_ = nh.subscribe("can_tx0", 10, &PCANRouter::CallbackCANTX, this);
 
     // Publisher init
-    p_can_tx_ = nh.advertise<autohyu_msgs::FrameFD>("can_tx1", 10); // Change Kvaser Topic can_tx1
+    p_can_tx_ = nh.advertise<autohyu_msgs::FrameFD>("pcan_tx0", 10); // Change Kvaser Topic can_tx1
+
+    // Set system time (ms)
+    current_time_ = ros::Time::now().nsec / 1000000;
+    timer_10ms_   = current_time_;
+    timer_100ms_  = current_time_;
 
     // Algorithm init
     ptr_auto_ku_can_process_ = make_unique<AutoKuCanProcess>();
@@ -45,20 +50,26 @@ PCANRouter::~PCANRouter() {
 void PCANRouter::Run() {
     ProcessINI();
     b_is_valid_ = true;
+
+    // Update timer
+    current_time_ = ros::Time::now().nsec / 1000000;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // Get subscribe variables
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-    if(SYSTIME_DIFF(timer_10ms, SYSTIME_NOW) > TIME_11_MS)
+    if(GetTimeDifference(current_time_, timer_10ms_) > 10)
     {
-        timer_10ms = SYSTIME_NOW - (SYSTIME_DIFF(timer_10ms, SYSTIME_NOW) - TIME_11_MS);
-        ptr_auto_ku_can_process_->Timer10msProcess(SYSTIME_NOW);
+        std::cout << "Update ADCMD ROS msg, 10ms time assumed: " << GetTimeDifference(current_time_, timer_10ms_) << std::endl;
+        timer_10ms_ = current_time_ - (GetTimeDifference(current_time_, timer_10ms_) - 10);
+        ptr_auto_ku_can_process_->Timer10msProcess(current_time_);
         UpdateADCMD();
         b_is_ADCMD_updated_ = true;
     }
     
-    if(SYSTIME_DIFF(timer_100ms, SYSTIME_NOW) > TIME_100_MS)
+    if(GetTimeDifference(current_time_, timer_100ms_) > 100)
     {
-        timer_100ms = SYSTIME_NOW - (SYSTIME_DIFF(timer_100ms, SYSTIME_NOW) - TIME_100_MS);
+        std::cout << "Update STA ROS msg, 100ms time assumed: " << GetTimeDifference(current_time_, timer_100ms_) << std::endl;
+        timer_100ms_ = current_time_ - (GetTimeDifference(current_time_, timer_100ms_) - 100);
         ptr_auto_ku_can_process_->Timer100msProcess();
         UpdateAutoKUSTA();
         b_is_AutoKUSTA_updated_ = true;
@@ -93,6 +104,8 @@ void PCANRouter::ProcessRosparam(const ros::NodeHandle& nh) {
 // Update functions for publish variables
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
+
+
 void PCANRouter::UpdateADCMD(){
     o_can_ADCMD_tx_.id        =  hmg_ioniq::CANID_ADCMD;
     o_can_ADCMD_tx_.dlc       =  hmg_ioniq::DLC_ADCMD;
@@ -107,6 +120,13 @@ void PCANRouter::UpdateAutoKUSTA(){
     o_can_AutoKUSTA_tx_.is_canfd = true;
     o_can_AutoKUSTA_tx_.data.resize(internal_can::DLC_INTERNAL_STA);
     memcpy(&o_can_AutoKUSTA_tx_.data[0], &ptr_auto_ku_can_process_->o_autoku_can_sta_.data[0], size_t(internal_can::DLC_INTERNAL_STA));
+}
+
+// Get time difference
+uint32_t PCANRouter::GetTimeDifference(const uint32_t& current_time, const uint32_t& prev_time){
+    uint32_t time_difference;
+    time_difference = current_time - prev_time;
+    return time_difference;
 }
 
 int main(int argc, char** argv) {

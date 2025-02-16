@@ -1,8 +1,0 @@
-<launch>    
-    <arg name="car" default="hmg" /> 
-
-    <rosparam file="config/rosparam_system.yaml" command="load"/>
-    <node pkg="can_transmitter" type="can_transmitter" name="can_transmitter" output="screen" respawn="true">
-        <param name="car" value="$(arg car)"/>
-    </node>
-</launch>
