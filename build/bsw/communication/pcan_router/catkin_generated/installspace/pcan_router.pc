@@ -1,8 +1,0 @@
-prefix=/home/seheonha/git/AutoHYU-Control-Personality/install
-
-Name: pcan_router
-Description: Description of pcan_router
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: 
