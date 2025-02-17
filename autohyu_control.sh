@@ -9,7 +9,7 @@
 # ==============================================================================
 # -- Set up environment --------------------------------------------------------
 # ==============================================================================
-PRJ_DIR=$HOME/git/AutoHYU-Control
+PRJ_DIR=$HOME/git/AutoHYU-Control-Personality
 ROSPKG_LIST=($(bash -ic 'rospack list&'))
 MAP="kcity" # konkuk, grandpark, speedway, kcity, hanyang ...
 CAR="hmg"      # hmg, ailab

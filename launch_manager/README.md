@@ -61,7 +61,7 @@ pip3 install PyQt5
 
 ```ini
 [Default Path]
-working_directory = ~/git/AutoHYU-Control
+working_directory = ~/git/AutoHYU-Control-Personality
 
 [Environment]
 # 환경 변수는 소문자로 정의하지만, 실행 명령어에서는 대문자로 자동 변환되어 사용됨
