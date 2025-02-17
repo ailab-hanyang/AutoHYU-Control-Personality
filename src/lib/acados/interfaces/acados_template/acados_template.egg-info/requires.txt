@@ -1,6 +1,0 @@
-casadi
-cython
-future-fstrings
-matplotlib
-numpy
-scipy

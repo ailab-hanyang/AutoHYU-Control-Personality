@@ -1,7 +1,0 @@
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/install/strip.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/install/local.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/install.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/list_install_components.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/rebuild_cache.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/edit_cache.dir
-/home/seheonha/git/AutoHYU-Control/src/lib/hpipm/hpipm/build/CMakeFiles/hpipm.dir
